@@ -1,0 +1,33 @@
+{
+  "name": "javascript30-day-two",
+  "version": "1.0.0",
+  "description": "A vanilla js and css clock",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mav1283/javascript30-day-two.git"
+  },
+  "keywords": [
+    "Vanilla",
+    "Javascript",
+    "CSS",
+    "Clock"
+  ],
+  "author": "Dani Paolo S. Dullano",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mav1283/javascript30-day-two/issues"
+  },
+  "homepage": "https://github.com/mav1283/javascript30-day-two#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^5.0.0",
+    "gulp-rename": "^1.4.0",
+    "gulp-sass": "^4.0.1",
+    "gulp-sourcemaps": "^2.6.4",
+    "gulp-uglify": "^3.0.0"
+  }
+}

@@ -1,0 +1,14 @@
+body,
+body * {
+    margin:          unset;
+    box-sizing:      unset;
+    padding:         unset; 
+    color:           unset;
+    text-decoration: unset;
+}
+
+body{ 
+    box-sizing: border-box;
+    font-family: 'Lato', sans-serif;
+    background: #fff;
+}
