@@ -23,7 +23,7 @@ let htmlWatch = '**/*.html'; // watch all the files in all the folders and all d
 
 /* Converting Sass to CSS */
 gulp.task('styles',function(){
-    gulp.src(styleSource)
+    return gulp.src(styleSource)
         .pipe(sourcemaps.init())
         .pipe(sass({
             errorLogToConsole: true,
@@ -60,12 +60,12 @@ gulp.task('js',function(){
 })
 
 // default task to run all tasks
-gulp.task('default', ['styles','js']);
+gulp.task('default', gulp.series(['styles','js']));
 
 // watch default
-gulp.task('watch', ['default'], function(){ // ,'browser-sync'
+gulp.task('watch', gulp.series(['default'], function(){ // ,'browser-sync'
     // keep running, watching and triggering gulp
-    gulp.watch(styleWatch, ['styles']); //, reload
-    gulp.watch(jsWatch, ['js']); //, reload
+    gulp.watch(styleWatch, gulp.parallel(['styles'])); //, reload
+    gulp.watch(jsWatch, gulp.parallel(['js'])); //, reload
     gulp.watch(htmlWatch);
-});
+}));
