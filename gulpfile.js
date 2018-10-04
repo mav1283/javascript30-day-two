@@ -56,7 +56,7 @@ gulp.task('js',function(){
         .pipe(sourcemaps.write('./'))
         .pipe(gulp.dest(jsDestination))
     });
-        
+    
 })
 
 // default task to run all tasks
