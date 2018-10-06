@@ -25,11 +25,14 @@ body{
     position: relative;
     width: 15rem;
     height: 15rem;
-    border: 20px solid #fff;
+    // border: 2px solid #fff;
     border-radius: 50%;
-    position: relative;
-    padding: 2rem;
+    //padding: 2rem;
     margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
     .min-container{
         position: relative;
         width: 100%;
@@ -38,7 +41,7 @@ body{
         transform-origin: 50%;
         transform: rotate(-6deg);
         //border: 1px solid rgba(0,0,0,0.3);
-         overflow: hidden;
+        overflow: hidden;
          .minute{
            width: 100%;
            position: absolute;
@@ -48,7 +51,7 @@ body{
            bottom: 0;
            height: 2px;
            margin: auto;
-           background: linear-gradient(to right, #999 2.5%, transparent 0%);
+           background: linear-gradient(to right, #fff 2.5%, transparent 0%);
            transform-origin: 50%;
            z-index: 5;
          }
@@ -67,5 +70,41 @@ body{
           transform-origin: 100%;
         }
       }
-    
 }
+
+
+.clock-hand:first-child{
+    transform: rotate(90deg);
+}
+.clock-hand:nth-child(2){
+    transform: rotate(30deg);
+}
+.clock-hand:last-child{
+transform: rotate(60deg);
+}
+
+.hr{
+    background: linear-gradient(to left, #fff 70%, transparent 30%);
+    height: 8px;
+}
+.min{
+    background: linear-gradient(to left, #fff 96%, transparent 10%);
+    height: 4px;
+}
+.sec{
+    background: linear-gradient(to left, #fff 96%, transparent 4%);
+    height: 1px;
+}
+  
+  
+  @for $i from 1 through 60{
+    .minute:nth-child(#{$i}){
+      
+      transform: rotate($i * 6deg);
+    }
+  }
+  
+  .big{
+    background: linear-gradient(to right, #fff 5%, transparent 0%) !important;
+    height: 4px !important;
+  }
