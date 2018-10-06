@@ -60,12 +60,17 @@ gulp.task('js',function(){
 })
 
 // default task to run all tasks
-gulp.task('default', gulp.series(['styles','js']));
+const compile = gulp.parallel(['styles','js']);
+compile.description = 'Compile all styles and js files';
+
+gulp.task('default', compile);
 
 // watch default
-gulp.task('watch', gulp.series(['default'], function(){ // ,'browser-sync'
-    // keep running, watching and triggering gulp
-    gulp.watch(styleWatch, gulp.parallel(['styles'])); //, reload
-    gulp.watch(jsWatch, gulp.parallel(['js'])); //, reload
-    gulp.watch(htmlWatch);
-}));
+const watch = gulp.series(['default'], function(){ // ,'browser-sync'
+// keep running, watching and triggering gulp
+gulp.watch(styleWatch, gulp.parallel(['styles'])); //, reload
+gulp.watch(jsWatch, gulp.parallel(['js'])); //, reload
+gulp.watch(htmlWatch);
+});
+watch.description = 'watch all changes in every files and folders';
+gulp.task('watch', watch);
