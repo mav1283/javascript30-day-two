@@ -9,21 +9,17 @@ const babelify = require('babelify');
 const source = require('vinyl-source-stream');
 const buffer = require('vinyl-buffer');
 
-let styleSource = 'src/scss/style.scss';
 let styleDestination = './build/css/';
-let styleWatch = 'src/scss/**/*.scss'; // watch every single file in every folder in the sub directory with the extension of .scss
-
-let jsSource = 'main.js';
-let jsFolder = 'src/js/';
 let jsDestination = './build/js/';
-let jsWatch = 'src/js/**/*.js'; // watch every single file in every folder in the sub directory with the extension of .js
-let jsFILES = [jsSource];
 
-let htmlWatch = '**/*.html'; // watch all the files in all the folders and all directories that ends with the html extension
+let paths = {
+    scripts: 'src/js/main.js',
+    styles: 'src/scss/style.scss'
+}
 
 /* Converting Sass to CSS */
-gulp.task('styles',function(){
-    return gulp.src(styleSource)
+gulp.task('convertocss',function(done){
+    return gulp.src(paths.styles)
         .pipe(sourcemaps.init())
         .pipe(sass({
             errorLogToConsole: true,
@@ -35,42 +31,43 @@ gulp.task('styles',function(){
             cascade: false
         }))
         .pipe(rename({suffix:'.min'}))
-        .pipe(sourcemaps.write('./'))
+        .pipe(sourcemaps.write())
         .pipe(gulp.dest(styleDestination));
+        done();
 });
 
 /* Converting ES6 to Vanilla JS */
-gulp.task('js',function(){
-    // map for each js files loop through it and do this functions
-    jsFILES.map(function(entry){
-        return browserify({
-            entries: [`${jsFolder}${entry}`]
-        }) //Browserify is a development tool that allows us to write node.js-style modules that compile for use in the browser
-        .transform(babelify, {presets:['env']})  // babel-preset-env, which allows us to target specific browser versions with the transpiled code.
-        .bundle() // default package of gulp
-        .pipe(source(entry))
+gulp.task('convertojs',function(done){
+    return browserify({
+            entries: paths.scripts
+        })
+        .transform(babelify, {presets:['env']})
+        .bundle() 
+        .pipe(source('main.js'))
         .pipe( rename({extname:'.min.js'}) )
         .pipe(buffer())
         .pipe(sourcemaps.init({loadMaps: true})) 
-        .pipe(uglify()) // similar to the output style compressed of sass
+        .pipe(uglify())
         .pipe(sourcemaps.write('./'))
-        .pipe(gulp.dest(jsDestination))
-    });
-    
-})
-
-// default task to run all tasks
-const compile = gulp.parallel(['styles','js']);
-compile.description = 'Compile all styles and js files';
-
-gulp.task('default', compile);
-
-// watch default
-const watch = gulp.series(['default'], function(){ // ,'browser-sync'
-// keep running, watching and triggering gulp
-gulp.watch(styleWatch, gulp.parallel(['styles'])); //, reload
-gulp.watch(jsWatch, gulp.parallel(['js'])); //, reload
-gulp.watch(htmlWatch);
+        .pipe(gulp.dest(jsDestination));
+        done();    
 });
-watch.description = 'watch all changes in every files and folders';
-gulp.task('watch', watch);
+
+// run all tasks
+gulp.task('run',gulp.parallel('convertocss','convertojs'));
+
+// watch
+gulp.task('watch', function(){
+    gulp.watch(paths.styles, gulp.series('convertocss')); 
+    gulp.watch(paths.scripts, gulp.series('convertojs')); 
+});
+
+gulp.task('default',gulp.series('run','watch'));
+
+
+
+
+
+
+
+
