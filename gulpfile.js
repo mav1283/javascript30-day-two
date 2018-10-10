@@ -41,7 +41,7 @@ gulp.task('convertojs',function(done){
     return browserify({
             entries: paths.scripts
         })
-        .transform(babelify, {presets:['env']})
+        .transform(babelify, {presets:['@babel/preset-env']})
         .bundle() 
         .pipe(source('main.js'))
         .pipe( rename({extname:'.min.js'}) )

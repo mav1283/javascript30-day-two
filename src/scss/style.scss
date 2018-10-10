@@ -1,3 +1,14 @@
+@import url('https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i');
+@import url('https://fonts.googleapis.com/css?family=Orbitron');
+
+@font-face{
+    font-family: 'DS-DIGITAL';
+    src: url('https://res.cloudinary.com/dzsmdyknz/raw/upload/v1532588680/fcc-drum-machine/ds-digital-font/DS-DIGIT.TTF');
+    src: url('https://res.cloudinary.com/dzsmdyknz/raw/upload/v1532588680/fcc-drum-machine/ds-digital-font/DS-DIGIB.TTF');
+    src: url('https://res.cloudinary.com/dzsmdyknz/raw/upload/v1532588679/fcc-drum-machine/ds-digital-font/DS-DIGII.TTF');
+    src: url('https://res.cloudinary.com/dzsmdyknz/raw/upload/v1532588679/fcc-drum-machine/ds-digital-font/DS-DIGI.TTF');
+}
+
 @import 'base/variables';
 
 body,
@@ -12,7 +23,7 @@ body * {
 body{ 
     box-sizing: border-box;
     font-family: 'Lato', sans-serif;
-    background: var(--belize-hole);
+    background: linear-gradient(to bottom right, var(--belize-hole),var(--amethyst));
     width: 100%;
     height: 100vh;
     padding: 2rem;
@@ -25,14 +36,39 @@ body{
     position: relative;
     width: 15rem;
     height: 15rem;
-    // border: 2px solid #fff;
+    background: linear-gradient(to bottom right, var(--amethyst),var(--belize-hole));
+    //background: rgba(255,255,255,0.075);
+    //background: radial-gradient( rgba(255,255,255,0.3) 10%, transparent 90%);
+    padding: 0.5rem;
+    //border: 1px solid rgba(255,255,255,0.075);
     border-radius: 50%;
-    //padding: 2rem;
-    margin: auto;
+    box-shadow: 0px 2px 4px rgba(0,0,0,0.3);
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 1;
+    .clockface{
+        position: absolute;
+        width: 20%;
+        height: 20%;
+        border-radius: 50%;
+        top: 50%;
+        transform: translateY(-50%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #000;
+        
+        z-index: 20;
+        .clocktime{
+            position: relative;
+            padding: 0.25rem;
+            display: grid;
+            grid-template-columns: repeat(2,1fr);
+            text-align: center;
+            color: #fff;
+        }
+    }
     .min-container{
         position: relative;
         width: 100%;
@@ -42,7 +78,7 @@ body{
         transform: rotate(-6deg);
         //border: 1px solid rgba(0,0,0,0.3);
         overflow: hidden;
-         .minute{
+         .tick{
            width: 100%;
            position: absolute;
            top: 0;
@@ -53,105 +89,96 @@ body{
            margin: auto;
            background: linear-gradient(to right, #fff 2.5%, transparent 0%);
            transform-origin: 50%;
+           transition: 0.05s;
+           transition-timing-function: cubic-bezier(0.1, 2.7, 0.58, 1);
            z-index: 5;
          }
        }
     .clockhands{
         position: absolute;
-        width: 92.5%;
-        height: 92.5%;
+        width: 84%;
+        height: 84%;
         border-radius: 50%;
         z-index: 10;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         .clock-hand{
-          width: 50%;
-          //border: 1px solid rgba(0,0,0,0.2);
+          width: 98%;
           position: absolute;
-          top: 50%;
-          transform-origin: 100%;
+          transform-origin: 50%;
         }
       }
 }
 
+.top-text{
+    font-size: 1rem;
+    text-align: center;
+    grid-column: 1 / -1;
+    font-family: 'DS-DIGITAL';
+}
+.bottom-text{
+    font-size: 0.65rem;
+    text-align: center;
+    grid-column: 1 / -1;
+    grid-row: 2;
+    color: #f00;
+}
 
-.clock-hand:first-child{
-    transform: rotate(90deg);
+
+.hr-hand{
+    height: 16px;
 }
-.clock-hand:nth-child(2){
-    transform: rotate(30deg);
-}
-.clock-hand:last-child{
-transform: rotate(60deg);
+.hr-hand::before{
+    position: absolute;
+    content: '';
+    width: 30%;
+    height: 100%;
+    top: 0;
+    left: 5%;
+    background: #000;
+    border-radius: 20%;
 }
 
-.hr{
-    background: linear-gradient(to left, #fff 70%, transparent 30%);
+.min-hand{
     height: 8px;
 }
 
-.hr::before{
+.min-hand::before{
     position: absolute;
     content: '';
-    left: 30%;
-    width: 10px;
-    height: 20px;
-    border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;
-    margin: auto;
-    display: block;
-    background: #fff;
-    top: 50%;
-    transform: translateY(-50%);
+    width: 35%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: #ff0;
+    border-radius: 20%;
 }
 
-.min{
-    background: linear-gradient(to left, #fff 96%, transparent 10%);
+.sec-hand{
     height: 4px;
 }
 
-.min::before{
+.sec-hand::before{
     position: absolute;
     content: '';
-    left: 5%;
-    width: 7px;
-    height: 10px;
-    border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;
-    margin: auto;
-    display: block;
-    background: #fff;
-    top: 50%;
-    transform: translateY(-50%);
+    width: 35%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: #f00;
+    border-radius: 20%;
 }
 
-.sec{
-    background: linear-gradient(to left, #fff 96%, transparent 4%);
-    height: 1px;
-}
-
-.sec::before{
-    position: absolute;
-    content: '';
-    left: 5%;
-    width: 3px;
-    height: 6px;
-    border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;
-    margin: auto;
-    display: block;
-    background: #fff;
-    top: 50%;
-    transform: translateY(-50%);
-}
   
   
-  @for $i from 1 through 60{
-    .minute:nth-child(#{$i}){
-      
-      transform: rotate($i * 6deg);
+@for $i from 1 through 60{
+    .tick:nth-child(#{$i}){
+        transform: rotate($i * 6deg);
     }
-  }
-  
-  .big{
+}
+
+.minute{
     background: linear-gradient(to right, #fff 5%, transparent 0%) !important;
     height: 4px !important;
-  }
+}

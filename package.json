@@ -24,6 +24,7 @@
   "homepage": "https://github.com/mav1283/javascript30-day-two#readme",
   "devDependencies": {
     "@babel/core": "^7.1.2",
+    "@babel/preset-env": "^7.1.0",
     "babel-core": "*",
     "babel-preset-env": "^1.7.0",
     "babelify": "^10.0.0",
@@ -38,6 +39,8 @@
     "vinyl-source-stream": "^2.0.0"
   },
   "babel": {
-    "presets": ["env"]
+    "presets": [
+      "@babel/preset-env"
+    ]
   }
 }
