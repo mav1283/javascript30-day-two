@@ -1,13 +1,23 @@
 const secondHand = document.querySelector('.sec-hand');
 const minuteHand = document.querySelector('.min-hand');
 const hourHand = document.querySelector('.hr-hand');
+const hourt = document.querySelector('.hr-t');
+const mint = document.querySelector('.min-t');
 const clockTimeTop = document.querySelector('.top-text');
 const clockTimeBottom = document.querySelector('.bottom-text');
 
 const leftPad = (val) =>{
     if(val<10) return `0${val}`
     return `${val}`
-  }
+}
+
+const militaryToStandard = (val) =>{
+    if(val >= 0 && val <= 12) {
+        return val;
+    } else{
+        return val - 12;
+    }
+}
 
 function setDate(){
     
@@ -30,10 +40,13 @@ function setDate(){
     hourHand.style.transform = `rotate(${hoursDegrees}deg)`;
 
     /* Handle Clock Time */
-    const hrTime = leftPad(hours);
+    const hrTime = leftPad(militaryToStandard(hours));
     const minTime = leftPad(minutes);
     const secTime = leftPad(seconds);
-    clockTimeTop.textContent = `${hrTime}:${minTime}`;
+
+
+    hourt.textContent = hrTime;
+    mint.textContent = minTime;
     clockTimeBottom.textContent = `${secTime} sec`;
 }
 

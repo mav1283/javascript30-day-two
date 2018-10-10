@@ -34,31 +34,30 @@ body{
 
 .clock{
     position: relative;
-    width: 15rem;
-    height: 15rem;
-    background: linear-gradient(to bottom right, var(--amethyst),var(--belize-hole));
+    width: 20rem;
+    height: 20rem;
+    background: rgba(0,0,0,0.7);
+    //background: linear-gradient(to bottom right, var(--amethyst),var(--belize-hole));
     //background: rgba(255,255,255,0.075);
     //background: radial-gradient( rgba(255,255,255,0.3) 10%, transparent 90%);
-    padding: 0.5rem;
+    padding: 0.75rem;
     //border: 1px solid rgba(255,255,255,0.075);
     border-radius: 50%;
-    box-shadow: 0px 2px 4px rgba(0,0,0,0.3);
+    //box-shadow: 0px 2px 4px rgba(0,0,0,0.3);
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 1;
     .clockface{
         position: absolute;
-        width: 20%;
-        height: 20%;
+        width: 22.5%;
+        height: 22.5%;
         border-radius: 50%;
-        top: 50%;
-        transform: translateY(-50%);
         display: flex;
         justify-content: center;
         align-items: center;
         background: #000;
-        
+        border: 1px solid rgba(255,255,255,0.1);
         z-index: 20;
         .clocktime{
             position: relative;
@@ -76,7 +75,6 @@ body{
         border-radius: 50%;
         transform-origin: 50%;
         transform: rotate(-6deg);
-        //border: 1px solid rgba(0,0,0,0.3);
         overflow: hidden;
          .tick{
            width: 100%;
@@ -96,8 +94,10 @@ body{
        }
     .clockhands{
         position: absolute;
-        width: 84%;
-        height: 84%;
+        background: radial-gradient(transparent 20%, rgba(0,0,0,0.6) 80%);
+        width: 80%;
+        height: 80%;
+        border: 1px solid rgba(255,255,255,0.1);
         border-radius: 50%;
         z-index: 10;
         display: flex;
@@ -112,13 +112,26 @@ body{
 }
 
 .top-text{
-    font-size: 1rem;
+    display: grid;
+    grid-template-columns: repeat(3,auto);
+    grid-gap: 0.25rem;
+    font-size: 1.25rem;
     text-align: center;
     grid-column: 1 / -1;
     font-family: 'DS-DIGITAL';
+    color: #fff;
+    .hr-t{
+        color: #09f;
+    }
+    .min-t{
+        color: #ff0;
+    }
 }
+
+
+
 .bottom-text{
-    font-size: 0.65rem;
+    font-size: 0.75rem;
     text-align: center;
     grid-column: 1 / -1;
     grid-row: 2;
@@ -132,11 +145,11 @@ body{
 .hr-hand::before{
     position: absolute;
     content: '';
-    width: 30%;
+    width: 27.5%;
     height: 100%;
     top: 0;
     left: 5%;
-    background: #000;
+    background: #09f;
     border-radius: 20%;
 }
 
@@ -147,7 +160,7 @@ body{
 .min-hand::before{
     position: absolute;
     content: '';
-    width: 35%;
+    width: 32.5%;
     height: 100%;
     top: 0;
     left: 0;
@@ -162,7 +175,7 @@ body{
 .sec-hand::before{
     position: absolute;
     content: '';
-    width: 35%;
+    width: 32.5%;
     height: 100%;
     top: 0;
     left: 0;
