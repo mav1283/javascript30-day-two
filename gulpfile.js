@@ -8,13 +8,17 @@ const browserify = require('browserify');
 const babelify = require('babelify');
 const source = require('vinyl-source-stream');
 const buffer = require('vinyl-buffer');
+const imagemin = require('gulp-imagemin');
+const pngquant = require('imagemin-pngquant');
 
 let styleDestination = './build/css/';
 let jsDestination = './build/js/';
+let imgDestination = './build/images/';
 
 let paths = {
     scripts: 'src/js/main.js',
-    styles: 'src/scss/style.scss'
+    styles: 'src/scss/style.scss',
+    images: 'src/images/Day-2-ClockIcon.png'
 }
 
 /* Converting Sass to CSS */
@@ -36,6 +40,17 @@ gulp.task('convertocss',function(done){
         done();
 });
 
+/* Converting images */
+gulp.task('convertoimg', function () {
+    return gulp.src('src/images/*')
+        .pipe(imagemin({
+            progressive: true,
+            svgoPlugins: [{removeViewBox: false}],
+            use: [pngquant()]
+        }))
+        .pipe(gulp.dest(imgDestination));
+});
+
 /* Converting ES6 to Vanilla JS */
 gulp.task('convertojs',function(done){
     return browserify({
@@ -54,12 +69,13 @@ gulp.task('convertojs',function(done){
 });
 
 // run all tasks
-gulp.task('run',gulp.parallel('convertocss','convertojs'));
+gulp.task('run',gulp.parallel('convertocss','convertoimg','convertojs'));
 
 // watch
 gulp.task('watch', function(){
     gulp.watch(paths.styles, gulp.series('convertocss')); 
-    gulp.watch(paths.scripts, gulp.series('convertojs')); 
+    gulp.watch(paths.scripts, gulp.series('convertojs'));
+    gulp.watch(paths.images, gulp.series('convertojs')); 
 });
 
 gulp.task('default',gulp.series('run','watch'));
